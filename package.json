@@ -1,0 +1,13 @@
+{
+  "name": "medbridge-landing",
+  "version": "1.0.0",
+  "description": "MedBridge - World-class medical care in China",
+  "scripts": {
+    "dev": "python3 -m http.server 3000",
+    "build": "echo 'No build needed for static site'",
+    "start": "python3 -m http.server 3000"
+  },
+  "keywords": ["medical", "tourism", "healthcare"],
+  "author": "",
+  "license": "MIT"
+}
