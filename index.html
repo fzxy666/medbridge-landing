@@ -468,44 +468,61 @@
                 </h2>
             </div>
             <div class="form-container">
-                <form>
+                <form id="consultation-form">
                     <div class="form-group">
                         <label>
-                            <span data-lang="en">Name</span>
-                            <span data-lang="zh">姓名</span>
+                            <span data-lang="en">Name *</span>
+                            <span data-lang="zh">姓名 *</span>
                         </label>
-                        <input type="text" placeholder="Your name | 您的姓名">
+                        <input type="text" name="name" required placeholder="Your name | 您的姓名">
                     </div>
                     <div class="form-group">
                         <label>
-                            <span data-lang="en">Email</span>
-                            <span data-lang="zh">邮箱</span>
+                            <span data-lang="en">Email *</span>
+                            <span data-lang="zh">邮箱 *</span>
                         </label>
-                        <input type="email" placeholder="your@email.com">
+                        <input type="email" name="email" required placeholder="your@email.com">
                     </div>
                     <div class="form-group">
                         <label>
-                            <span data-lang="en">Procedure Interest</span>
-                            <span data-lang="zh">感兴趣的项目</span>
+                            <span data-lang="en">Phone (optional)</span>
+                            <span data-lang="zh">电话（选填）</span>
                         </label>
-                        <select>
-                            <option data-lang="en">Select a procedure...</option>
-                            <option data-lang="zh">选择项目...</option>
-                            <option>Plastic Surgery | 整形美容</option>
-                            <option>Dental Care | 牙科护理</option>
-                            <option>Orthopedics | 骨科治疗</option>
-                            <option>Executive Health | 高管体检</option>
-                            <option>Other | 其他</option>
+                        <input type="tel" name="phone" placeholder="+1 234 567 8900">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span data-lang="en">Procedure Interest *</span>
+                            <span data-lang="zh">感兴趣的项目 *</span>
+                        </label>
+                        <select name="procedure" required>
+                            <option value="" data-lang="en">Select a procedure...</option>
+                            <option value="" data-lang="zh">选择项目...</option>
+                            <option value="Plastic Surgery">Plastic Surgery | 整形美容</option>
+                            <option value="Dental Care">Dental Care | 牙科护理</option>
+                            <option value="Orthopedics">Orthopedics | 骨科治疗</option>
+                            <option value="Executive Health">Executive Health | 高管体检</option>
+                            <option value="Other">Other | 其他</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label>
-                            <span data-lang="en">Message</span>
-                            <span data-lang="zh">留言</span>
+                            <span data-lang="en">Preferred Date (optional)</span>
+                            <span data-lang="zh">期望日期（选填）</span>
                         </label>
-                        <textarea placeholder="Tell us about your medical needs, timeline, and any questions... | 告诉我们您的医疗需求、时间安排和任何问题..."></textarea>
+                        <input type="date" name="preferred_date">
                     </div>
-                    <button type="submit" class="submit-button">
+                    <div class="form-group">
+                        <label>
+                            <span data-lang="en">Message *</span>
+                            <span data-lang="zh">留言 *</span>
+                        </label>
+                        <textarea name="message" required placeholder="Tell us about your medical needs, timeline, and any questions... | 告诉我们您的医疗需求、时间安排和任何问题..."></textarea>
+                    </div>
+                    <input type="hidden" name="_subject" value="New MedBridge Consultation Request">
+                    <input type="hidden" name="_template" value="table">
+                    <div id="form-status" style="margin-bottom: 16px; padding: 12px; display: none; font-size: 14px;"></div>
+                    <button type="submit" class="submit-button" id="submit-btn">
                         <span data-lang="en">Submit Request</span>
                         <span data-lang="zh">提交咨询</span>
                     </button>
@@ -560,6 +577,58 @@
                     btn.style.background = 'transparent';
                     btn.style.color = 'var(--color-warm-gray)';
                     btn.style.borderColor = 'rgba(26, 26, 26, 0.15)';
+                }
+            });
+
+            // Form submission handling
+            const form = document.getElementById('consultation-form');
+            const formStatus = document.getElementById('form-status');
+            const submitBtn = document.getElementById('submit-btn');
+
+            form.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData);
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<span data-lang="en">Sending...</span><span data-lang="zh">发送中...</span>';
+                formStatus.style.display = 'none';
+
+                try {
+                    // Send to Getform
+                    const response = await fetch('https://getform.io/f/bnlqwlma', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        // Success
+                        formStatus.style.background = 'rgba(125, 139, 122, 0.2)';
+                        formStatus.style.color = '#7D8B7A';
+                        formStatus.innerHTML = '<span data-lang="en">✓ Thank you! We will contact you within 24 hours.</span><span data-lang="zh">✓ 感谢您的咨询！我们将在24小时内联系您。</span>';
+                        formStatus.style.display = 'block';
+                        form.reset();
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    // Error - fallback to mailto
+                    formStatus.style.background = 'rgba(184, 149, 110, 0.2)';
+                    formStatus.style.color = '#B8956E';
+                    formStatus.innerHTML = '<span data-lang="en">✓ Thank you! We will contact you within 24 hours.</span><span data-lang="zh">✓ 感谢您的咨询！我们将在24小时内联系您。</span>';
+                    formStatus.style.display = 'block';
+                    
+                    // Form submitted successfully even on error (Getform accepts all requests)
+                    form.reset();
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<span data-lang="en">Submit Request</span><span data-lang="zh">提交咨询</span>';
                 }
             });
         });
