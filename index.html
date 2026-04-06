@@ -521,6 +521,8 @@
                     </div>
                     <input type="hidden" name="_subject" value="New MedBridge Consultation Request">
                     <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://fzxy666.github.io/medbridge-landing/#contact">
                     <div id="form-status" style="margin-bottom: 16px; padding: 12px; display: none; font-size: 14px;"></div>
                     <button type="submit" class="submit-button" id="submit-btn">
                         <span data-lang="en">Submit Request</span>
@@ -589,7 +591,6 @@
                 e.preventDefault();
                 
                 const formData = new FormData(form);
-                const data = Object.fromEntries(formData);
                 
                 // Show loading state
                 submitBtn.disabled = true;
@@ -597,17 +598,18 @@
                 formStatus.style.display = 'none';
 
                 try {
-                    // Send to Getform
-                    const response = await fetch('https://getform.io/f/bnlqwlma', {
+                    // Send to FormSubmit.co - no registration needed
+                    const response = await fetch('https://formsubmit.co/ajax/minleaikj@outlook.com', {
                         method: 'POST',
                         headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
+                            'Accept': 'application/json'
                         },
-                        body: JSON.stringify(data)
+                        body: formData
                     });
 
-                    if (response.ok) {
+                    const result = await response.json();
+
+                    if (response.ok && result.success) {
                         // Success
                         formStatus.style.background = 'rgba(125, 139, 122, 0.2)';
                         formStatus.style.color = '#7D8B7A';
@@ -618,14 +620,12 @@
                         throw new Error('Form submission failed');
                     }
                 } catch (error) {
-                    // Error - fallback to mailto
-                    formStatus.style.background = 'rgba(184, 149, 110, 0.2)';
-                    formStatus.style.color = '#B8956E';
-                    formStatus.innerHTML = '<span data-lang="en">✓ Thank you! We will contact you within 24 hours.</span><span data-lang="zh">✓ 感谢您的咨询！我们将在24小时内联系您。</span>';
+                    console.error('Form error:', error);
+                    // Show error but offer mailto fallback
+                    formStatus.style.background = 'rgba(200, 100, 100, 0.2)';
+                    formStatus.style.color = '#C86464';
+                    formStatus.innerHTML = '<span data-lang="en">Please email us directly at minleaikj@outlook.com</span><span data-lang="zh">请直接发送邮件至 minleaikj@outlook.com</span>';
                     formStatus.style.display = 'block';
-                    
-                    // Form submitted successfully even on error (Getform accepts all requests)
-                    form.reset();
                 } finally {
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = '<span data-lang="en">Submit Request</span><span data-lang="zh">提交咨询</span>';
