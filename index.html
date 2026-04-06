@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedBridge — World-Class Medical Care in China</title>
+    <title>MedBridge — World-Class Medical Care in China | 国际医疗服务平台</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Space+Mono&display=swap" rel="stylesheet">
     <style>
         :root {
             --color-cream: #FAF9F7;
@@ -16,8 +16,8 @@
             --color-sage: #7D8B7A;
             --color-sage-light: #A8B5A7;
             --color-warm-gray: #8A8580;
-            --font-display: 'Playfair Display', Georgia, serif;
-            --font-body: 'DM Sans', -apple-system, sans-serif;
+            --font-display: 'Playfair Display', 'Noto Serif SC', Georgia, serif;
+            --font-body: 'DM Sans', 'Noto Sans SC', -apple-system, sans-serif;
             --font-mono: 'Space Mono', monospace;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,6 +30,33 @@
         }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
         
+        /* Language Switcher */
+        .lang-switch {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .lang-btn {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px solid rgba(26, 26, 26, 0.15);
+            color: var(--color-warm-gray);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: var(--font-body);
+        }
+        .lang-btn.active {
+            background: var(--color-charcoal);
+            color: var(--color-cream);
+            border-color: var(--color-charcoal);
+        }
+        .lang-btn:hover:not(.active) {
+            border-color: var(--color-charcoal);
+            color: var(--color-charcoal);
+        }
+
         /* Header */
         header {
             position: fixed;
@@ -45,21 +72,6 @@
         header .container { display: flex; justify-content: space-between; align-items: center; }
         .logo { font-family: var(--font-display); font-size: 24px; font-weight: 600; letter-spacing: -0.5px; color: var(--color-charcoal); text-decoration: none; }
         .logo span { color: var(--color-gold); }
-        nav { display: flex; gap: 32px; align-items: center; }
-        nav a { font-size: 14px; font-weight: 500; color: var(--color-warm-gray); text-decoration: none; transition: color 0.3s; }
-        nav a:hover { color: var(--color-charcoal); }
-        .cta-button {
-            background: var(--color-charcoal);
-            color: var(--color-cream);
-            padding: 12px 24px;
-            font-size: 13px;
-            font-weight: 600;
-            text-decoration: none;
-            letter-spacing: 0.5px;
-            transition: all 0.3s;
-            border: 1px solid var(--color-charcoal);
-        }
-        .cta-button:hover { background: transparent; color: var(--color-charcoal); }
 
         /* Hero */
         .hero {
@@ -68,17 +80,6 @@
             align-items: center;
             padding: 120px 0 80px;
             position: relative;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 60%;
-            height: 120%;
-            background: linear-gradient(135deg, var(--color-sage-light) 0%, transparent 60%);
-            opacity: 0.15;
-            pointer-events: none;
         }
         .hero-content { max-width: 680px; position: relative; z-index: 1; }
         .hero-tag {
@@ -95,11 +96,22 @@
             background: rgba(125, 139, 122, 0.1);
             border-radius: 100px;
         }
-        .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--color-sage); border-radius: 50%; animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
         h1 { font-family: var(--font-display); font-size: clamp(48px, 8vw, 80px); font-weight: 400; line-height: 1.1; letter-spacing: -2px; margin-bottom: 24px; }
         h1 em { font-style: italic; color: var(--color-gold); }
         .hero-description { font-size: 18px; color: var(--color-warm-gray); max-width: 480px; margin-bottom: 40px; }
+        .cta-button {
+            background: var(--color-charcoal);
+            color: var(--color-cream);
+            padding: 12px 24px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
+            border: 1px solid var(--color-charcoal);
+            display: inline-block;
+        }
+        .cta-button:hover { background: transparent; color: var(--color-charcoal); }
         .hero-stats { display: flex; gap: 48px; margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(26, 26, 26, 0.1); }
         .stat { display: flex; flex-direction: column; gap: 4px; }
         .stat-number { font-family: var(--font-display); font-size: 36px; font-weight: 500; }
@@ -107,7 +119,6 @@
 
         /* Services */
         .services { padding: 120px 0; background: var(--color-charcoal); color: var(--color-cream); }
-        .services::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(250, 249, 247, 0.2), transparent); }
         .section-header { text-align: center; margin-bottom: 80px; }
         .section-tag { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--color-gold); margin-bottom: 16px; }
         .section-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 48px); font-weight: 400; letter-spacing: -1px; }
@@ -165,11 +176,18 @@
         .footer-links { display: flex; gap: 24px; }
         .footer-links a { font-size: 13px; color: var(--color-warm-gray); text-decoration: none; }
 
+        /* Language specific */
+        [data-lang="zh"] { display: none; }
+        html[lang="zh"] [data-lang="en"] { display: none; }
+        html[lang="zh"] [data-lang="zh"] { display: block; }
+        html[lang="zh"] [data-lang="zh"].inline { display: inline; }
+        html[lang="zh"] [data-lang="zh"].flex { display: flex; }
+
         @media (max-width: 768px) {
-            nav { display: none; }
             .hero-stats { flex-direction: column; gap: 24px; }
             .step { grid-template-columns: 1fr; gap: 16px; }
             .step-number { font-size: 48px; }
+            .lang-switch { margin-left: auto; }
         }
     </style>
 </head>
@@ -177,26 +195,54 @@
     <header>
         <div class="container">
             <a href="#" class="logo">Med<span>Bridge</span></a>
-            <nav>
-                <a href="#services">Services</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="#testimonials">Reviews</a>
-                <a href="#contact" class="cta-button">Get Started</a>
-            </nav>
+            <div class="lang-switch">
+                <button class="lang-btn active" onclick="setLang('en')">EN</button>
+                <button class="lang-btn" onclick="setLang('zh')">中文</button>
+            </div>
         </div>
     </header>
 
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <div class="hero-tag">Trusted by 500+ patients</div>
-                <h1>World-Class Medical Care in <em>China</em></h1>
-                <p class="hero-description">Access internationally-certified hospitals and specialists at a fraction of Western prices. We handle the details — you focus on getting better.</p>
-                <a href="#contact" class="cta-button">Request Free Consultation</a>
+                <div class="hero-tag">
+                    <span data-lang="en">Trusted by 500+ patients</span>
+                    <span data-lang="zh">500+ 患者信赖</span>
+                </div>
+                <h1>
+                    <span data-lang="en">World-Class Medical Care in <em>China</em></span>
+                    <span data-lang="zh">世界级医疗服务<br><em>在中国</em></span>
+                </h1>
+                <p class="hero-description">
+                    <span data-lang="en">Access internationally-certified hospitals and specialists at a fraction of Western prices. We handle the details — you focus on getting better.</span>
+                    <span data-lang="zh">以西方医疗费用的零头，享受国际认证医院和专家服务。我们处理所有细节 — 您只需专注于康复。</span>
+                </p>
+                <a href="#contact" class="cta-button">
+                    <span data-lang="en">Request Free Consultation</span>
+                    <span data-lang="zh">免费咨询</span>
+                </a>
                 <div class="hero-stats">
-                    <div class="stat"><span class="stat-number">70%</span><span class="stat-label">Average Savings</span></div>
-                    <div class="stat"><span class="stat-number">50+</span><span class="stat-label">Partner Hospitals</span></div>
-                    <div class="stat"><span class="stat-number">4.9</span><span class="stat-label">Patient Rating</span></div>
+                    <div class="stat">
+                        <span class="stat-number">70%</span>
+                        <span class="stat-label">
+                            <span data-lang="en">Average Savings</span>
+                            <span data-lang="zh">平均节省</span>
+                        </span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">
+                            <span data-lang="en">Partner Hospitals</span>
+                            <span data-lang="zh">合作医院</span>
+                        </span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">4.9</span>
+                        <span class="stat-label">
+                            <span data-lang="en">Patient Rating</span>
+                            <span data-lang="zh">患者评分</span>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -205,33 +251,75 @@
     <section class="services" id="services">
         <div class="container">
             <div class="section-header">
-                <p class="section-tag">What We Offer</p>
-                <h2 class="section-title">Medical Procedures</h2>
+                <p class="section-tag">
+                    <span data-lang="en">What We Offer</span>
+                    <span data-lang="zh">我们的服务</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="en">Medical Procedures</span>
+                    <span data-lang="zh">医疗项目</span>
+                </h2>
             </div>
             <div class="services-grid">
                 <div class="service-card">
                     <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    <h3 class="service-title">Plastic Surgery</h3>
-                    <p class="service-description">Breast augmentation, rhinoplasty, facelifts, and more. Board-certified surgeons at world-class facilities.</p>
-                    <p class="service-price">From $299 service fee • Save up to 60%</p>
+                    <h3 class="service-title">
+                        <span data-lang="en">Plastic Surgery</span>
+                        <span data-lang="zh">整形美容</span>
+                    </h3>
+                    <p class="service-description">
+                        <span data-lang="en">Breast augmentation, rhinoplasty, facelifts, and more. Board-certified surgeons at world-class facilities.</span>
+                        <span data-lang="zh">隆胸、隆鼻、拉皮等。世界级医疗机构，持证专家主刀。</span>
+                    </p>
+                    <p class="service-price">
+                        <span data-lang="en">From $299 service fee • Save up to 60%</span>
+                        <span data-lang="zh">服务费 $299 起 • 节省高达 60%</span>
+                    </p>
                 </div>
                 <div class="service-card">
                     <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    <h3 class="service-title">Dental Care</h3>
-                    <p class="service-description">Implants, crowns, veneers, and full smile makeovers. State-of-the-art clinics with English-speaking dentists.</p>
-                    <p class="service-price">From $199 service fee • Save up to 75%</p>
+                    <h3 class="service-title">
+                        <span data-lang="en">Dental Care</span>
+                        <span data-lang="zh">牙科护理</span>
+                    </h3>
+                    <p class="service-description">
+                        <span data-lang="en">Implants, crowns, veneers, and full smile makeovers. State-of-the-art clinics with English-speaking dentists.</span>
+                        <span data-lang="zh">种植牙、牙冠、贴面、全口美容。先进诊所，英语服务。</span>
+                    </p>
+                    <p class="service-price">
+                        <span data-lang="en">From $199 service fee • Save up to 75%</span>
+                        <span data-lang="zh">服务费 $199 起 • 节省高达 75%</span>
+                    </p>
                 </div>
                 <div class="service-card">
                     <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                    <h3 class="service-title">Orthopedics</h3>
-                    <p class="service-description">Joint replacements, spinal procedures, and sports medicine. Advanced rehabilitation facilities included.</p>
-                    <p class="service-price">From $399 service fee • Save up to 80%</p>
+                    <h3 class="service-title">
+                        <span data-lang="en">Orthopedics</span>
+                        <span data-lang="zh">骨科治疗</span>
+                    </h3>
+                    <p class="service-description">
+                        <span data-lang="en">Joint replacements, spinal procedures, and sports medicine. Advanced rehabilitation facilities included.</span>
+                        <span data-lang="zh">关节置换、脊柱手术、运动医学。包含先进康复设施。</span>
+                    </p>
+                    <p class="service-price">
+                        <span data-lang="en">From $399 service fee • Save up to 80%</span>
+                        <span data-lang="zh">服务费 $399 起 • 节省高达 80%</span>
+                    </p>
                 </div>
                 <div class="service-card">
                     <svg class="service-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    <h3 class="service-title">Executive Health</h3>
-                    <p class="service-description">Comprehensive health checkups and preventive care. Same-day results with detailed English reports.</p>
-                    <p class="service-price">From $149 service fee • Save up to 60%</p>
+                    <h3 class="service-title">
+                        <span data-lang="en">Executive Health</span>
+                        <span data-lang="zh">高管体检</span>
+                    </h3>
+                    <p class="service-description">
+                        <span data-lang="en">Comprehensive health checkups and preventive care. Same-day results with detailed English reports.</span>
+                        <span data-lang="zh">全面健康体检和预防护理。当天出结果，英文报告。</span>
+                    </p>
+                    <p class="service-price">
+                        <span data-lang="en">From $149 service fee • Save up to 60%</span>
+                        <span data-lang="zh">服务费 $149 起 • 节省高达 60%</span>
+                    </p>
                 </div>
             </div>
         </div>
@@ -240,25 +328,67 @@
     <section class="how-it-works" id="how-it-works">
         <div class="container">
             <div class="section-header">
-                <p class="section-tag">How It Works</p>
-                <h2 class="section-title">Simple Process</h2>
+                <p class="section-tag">
+                    <span data-lang="en">How It Works</span>
+                    <span data-lang="zh">服务流程</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="en">Simple Process</span>
+                    <span data-lang="zh">简单四步</span>
+                </h2>
             </div>
             <div class="steps">
                 <div class="step">
                     <span class="step-number">01</span>
-                    <div class="step-content"><h3>Share Your Needs</h3><p>Tell us about your medical requirements, preferred dates, and any questions. Our team reviews every inquiry personally.</p></div>
+                    <div class="step-content">
+                        <h3>
+                            <span data-lang="en">Share Your Needs</span>
+                            <span data-lang="zh">提交需求</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Tell us about your medical requirements, preferred dates, and any questions. Our team reviews every inquiry personally.</span>
+                            <span data-lang="zh">告诉我们您的医疗需求、期望日期和任何问题。我们的团队会亲自审核每个咨询。</span>
+                        </p>
+                    </div>
                 </div>
                 <div class="step">
                     <span class="step-number">02</span>
-                    <div class="step-content"><h3>Receive Custom Options</h3><p>We match you with 2-3 verified hospitals and specialists, complete with credentials, pricing, and patient reviews.</p></div>
+                    <div class="step-content">
+                        <h3>
+                            <span data-lang="en">Receive Custom Options</span>
+                            <span data-lang="zh">获取定制方案</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">We match you with 2-3 verified hospitals and specialists, complete with credentials, pricing, and patient reviews.</span>
+                            <span data-lang="zh">我们为您匹配2-3家认证医院和专家，包含资质、价格和患者评价。</span>
+                        </p>
+                    </div>
                 </div>
                 <div class="step">
                     <span class="step-number">03</span>
-                    <div class="step-content"><h3>Book & Travel</h3><p>We coordinate appointments, arrange translation services, and help with travel logistics. You simply arrive.</p></div>
+                    <div class="step-content">
+                        <h3>
+                            <span data-lang="en">Book & Travel</span>
+                            <span data-lang="zh">预约出行</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">We coordinate appointments, arrange translation services, and help with travel logistics. You simply arrive.</span>
+                            <span data-lang="zh">我们协调预约、安排翻译服务、协助行程。您只需抵达即可。</span>
+                        </p>
+                    </div>
                 </div>
                 <div class="step">
                     <span class="step-number">04</span>
-                    <div class="step-content"><h3>Recover with Support</h3><p>Full English support during your stay. We coordinate follow-up care and ensure a smooth return home.</p></div>
+                    <div class="step-content">
+                        <h3>
+                            <span data-lang="en">Recover with Support</span>
+                            <span data-lang="zh">康复支持</span>
+                        </h3>
+                        <p>
+                            <span data-lang="en">Full English support during your stay. We coordinate follow-up care and ensure a smooth return home.</span>
+                            <span data-lang="zh">全程英语支持。我们协调后续护理，确保顺利回国。</span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -267,21 +397,36 @@
     <section class="testimonials" id="testimonials">
         <div class="container">
             <div class="section-header">
-                <p class="section-tag">Patient Stories</p>
-                <h2 class="section-title">Trusted by Thousands</h2>
+                <p class="section-tag">
+                    <span data-lang="en">Patient Stories</span>
+                    <span data-lang="zh">患者故事</span>
+                </p>
+                <h2 class="section-title">
+                    <span data-lang="en">Trusted by Thousands</span>
+                    <span data-lang="zh">万千信赖</span>
+                </h2>
             </div>
             <div class="testimonial-grid">
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Saved $18,000 on my hip replacement. The hospital in Shanghai was immaculate, and the team arranged everything — from airport pickup to translation. Couldn't have been smoother."</p>
-                    <div class="testimonial-author"><div class="testimonial-avatar">MJ</div><div class="testimonial-info"><h4>Michael J.</h4><span>California, USA</span></div></div>
+                    <p class="testimonial-text">
+                        <span data-lang="en">"Saved $18,000 on my hip replacement. The hospital in Shanghai was immaculate, and the team arranged everything — from airport pickup to translation. Couldn't have been smoother."</span>
+                        <span data-lang="zh">"髋关节置换省了$18,000。上海的医院一尘不染，团队安排了所有事情——从接机到翻译。非常顺利。"</span>
+                    </p>
+                    <div class="testimonial-author"><div class="testimonial-avatar">MJ</div><div class="testimonial-info"><h4>Michael J.</h4><span>California, USA | 美国加州</span></div></div>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Got dental implants that would have cost $32,000 in the US. Paid $6,000 total including travel. The dentists were exceptional — trained in the US and Germany."</p>
-                    <div class="testimonial-author"><div class="testimonial-avatar">SK</div><div class="testimonial-info"><h4>Sarah K.</h4><span>London, UK</span></div></div>
+                    <p class="testimonial-text">
+                        <span data-lang="en">"Got dental implants that would have cost $32,000 in the US. Paid $6,000 total including travel. The dentists were exceptional — trained in the US and Germany."</span>
+                        <span data-lang="zh">"在美国要$32,000的种植牙，总共只花了$6,000含机票。牙医非常优秀——在美国和德国培训过。"</span>
+                    </p>
+                    <div class="testimonial-author"><div class="testimonial-avatar">SK</div><div class="testimonial-info"><h4>Sarah K.</h4><span>London, UK | 英国伦敦</span></div></div>
                 </div>
                 <div class="testimonial-card">
-                    <p class="testimonial-text">"Facelift at half the price of Beverly Hills. MedBridge handled everything — even my hotel and post-op care. The English support throughout was incredible."</p>
-                    <div class="testimonial-author"><div class="testimonial-avatar">DP</div><div class="testimonial-info"><h4>David P.</h4><span>Toronto, Canada</span></div></div>
+                    <p class="testimonial-text">
+                        <span data-lang="en">"Facelift at half the price of Beverly Hills. MedBridge handled everything — even my hotel and post-op care. The English support throughout was incredible."</span>
+                        <span data-lang="zh">"拉皮手术比贝弗利山庄便宜一半。MedBridge处理了所有事情——甚至酒店和术后护理。全程英语支持太棒了。"</span>
+                    </p>
+                    <div class="testimonial-author"><div class="testimonial-avatar">DP</div><div class="testimonial-info"><h4>David P.</h4><span>Toronto, Canada | 加拿大多伦多</span></div></div>
                 </div>
             </div>
         </div>
@@ -289,11 +434,23 @@
 
     <section class="cta-section">
         <div class="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Join thousands of patients who have accessed world-class medical care at a fraction of Western prices.</p>
+            <h2>
+                <span data-lang="en">Ready to Get Started?</span>
+                <span data-lang="zh">准备好开始了吗？</span>
+            </h2>
+            <p>
+                <span data-lang="en">Join thousands of patients who have accessed world-class medical care at a fraction of Western prices.</span>
+                <span data-lang="zh">加入万千患者，以西方医疗费用的零头享受世界级医疗服务。</span>
+            </p>
             <div class="cta-buttons">
-                <a href="#contact" class="cta-primary">Request Free Consultation</a>
-                <a href="mailto:hello@medbridge.com" class="cta-secondary">Email Us</a>
+                <a href="#contact" class="cta-primary">
+                    <span data-lang="en">Request Free Consultation</span>
+                    <span data-lang="zh">免费咨询</span>
+                </a>
+                <a href="mailto:hello@medbridge.com" class="cta-secondary">
+                    <span data-lang="en">Email Us</span>
+                    <span data-lang="zh">发送邮件</span>
+                </a>
             </div>
         </div>
     </section>
@@ -301,35 +458,57 @@
     <section class="form-section" id="contact">
         <div class="container">
             <div class="section-header">
-                <p class="section-tag">Get In Touch</p>
-                <h2 class="section-title" style="color: var(--color-cream);">Tell Us What You Need</h2>
+                <p class="section-tag">
+                    <span data-lang="en">Get In Touch</span>
+                    <span data-lang="zh">联系我们</span>
+                </p>
+                <h2 class="section-title" style="color: var(--color-cream);">
+                    <span data-lang="en">Tell Us What You Need</span>
+                    <span data-lang="zh">告诉我们您的需求</span>
+                </h2>
             </div>
             <div class="form-container">
                 <form>
                     <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" placeholder="Your full name">
+                        <label>
+                            <span data-lang="en">Name</span>
+                            <span data-lang="zh">姓名</span>
+                        </label>
+                        <input type="text" placeholder="Your name | 您的姓名">
                     </div>
                     <div class="form-group">
-                        <label>Email</label>
+                        <label>
+                            <span data-lang="en">Email</span>
+                            <span data-lang="zh">邮箱</span>
+                        </label>
                         <input type="email" placeholder="your@email.com">
                     </div>
                     <div class="form-group">
-                        <label>Procedure Interest</label>
+                        <label>
+                            <span data-lang="en">Procedure Interest</span>
+                            <span data-lang="zh">感兴趣的项目</span>
+                        </label>
                         <select>
-                            <option>Select a procedure...</option>
-                            <option>Plastic Surgery</option>
-                            <option>Dental Care</option>
-                            <option>Orthopedics</option>
-                            <option>Executive Health Check</option>
-                            <option>Other</option>
+                            <option data-lang="en">Select a procedure...</option>
+                            <option data-lang="zh">选择项目...</option>
+                            <option>Plastic Surgery | 整形美容</option>
+                            <option>Dental Care | 牙科护理</option>
+                            <option>Orthopedics | 骨科治疗</option>
+                            <option>Executive Health | 高管体检</option>
+                            <option>Other | 其他</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Message</label>
-                        <textarea placeholder="Tell us about your medical needs, timeline, and any questions..."></textarea>
+                        <label>
+                            <span data-lang="en">Message</span>
+                            <span data-lang="zh">留言</span>
+                        </label>
+                        <textarea placeholder="Tell us about your medical needs, timeline, and any questions... | 告诉我们您的医疗需求、时间安排和任何问题..."></textarea>
                     </div>
-                    <button type="submit" class="submit-button">Submit Request</button>
+                    <button type="submit" class="submit-button">
+                        <span data-lang="en">Submit Request</span>
+                        <span data-lang="zh">提交咨询</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -342,11 +521,36 @@
                 <span>© 2026 MedBridge. All rights reserved.</span>
             </div>
             <div class="footer-links">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Contact</a>
+                <a href="#">Privacy Policy | 隐私政策</a>
+                <a href="#">Terms of Service | 服务条款</a>
+                <a href="#">Contact | 联系</a>
             </div>
         </div>
     </footer>
+
+    <script>
+        function setLang(lang) {
+            document.documentElement.lang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            localStorage.setItem('preferred-lang', lang);
+        }
+
+        // Load preferred language
+        document.addEventListener('DOMContentLoaded', function() {
+            const preferredLang = localStorage.getItem('preferred-lang');
+            if (preferredLang === 'zh') {
+                document.documentElement.lang = 'zh';
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent === '中文') {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
